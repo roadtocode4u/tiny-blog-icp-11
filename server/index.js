@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import { postLogin, postSignup } from "./controllers/user.js";
-import { postBlogs } from "./controllers/blog.js";
+import { postBlogs, getBlogs } from "./controllers/blog.js";
 dotenv.config();
 
 const app = express();
@@ -31,7 +31,9 @@ app.get("/", (req, res) => {
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);
+app.get("/blogs", getBlogs);
 app.post("/blogs", postBlogs);
+
 
 const PORT = process.env.PORT || 8080;
 
