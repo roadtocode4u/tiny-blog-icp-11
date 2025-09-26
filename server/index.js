@@ -8,6 +8,7 @@ import {
   getBlogs,
   getBlogForSlug,
   patchPublishBlog,
+  putBlogs,
 } from "./controllers/blog.js";
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.get("/blogs", getBlogs);
 app.post("/blogs", postBlogs);
 app.get("/blogs/:slug", getBlogForSlug);
 app.patch("/blogs/:slug/publish", patchPublishBlog);
+app.put("/blogs/:slug", putBlogs);
 
 
 const PORT = process.env.PORT || 8080;

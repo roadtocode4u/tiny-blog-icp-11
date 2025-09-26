@@ -91,4 +91,27 @@ const patchPublishBlog = async (req, res) => {
   });
 };
 
-export { getBlogForSlug, getBlogs, patchPublishBlog, postBlogs };
+const putBlogs = async (req, res) => {
+  const { slug } = req.params;
+  const { title, category, content } = req.body;
+
+  if (!title || !category || !content) {
+    return res.status(400).json({
+      success: false,
+      message: "All fields are required",
+    });
+  }
+
+  const blog = await Blog.findOneAndUpdate(
+    { slug: slug },
+    { title, category, content }
+  );
+
+  return res.status(200).json({
+    success: true,
+    message: "Blog updated successfully",
+    blog: blog,
+  });
+};
+
+export { getBlogForSlug, getBlogs, patchPublishBlog, postBlogs, putBlogs };
