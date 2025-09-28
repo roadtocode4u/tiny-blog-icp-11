@@ -2,6 +2,7 @@ import MarkdownEditor from "@uiw/react-markdown-editor";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Navbar from "../components/Navbar";
 import { BLOG_CATEGORIES } from "./../constants";
 import { getCurrentUser } from "./../util";
 
@@ -46,6 +47,7 @@ function NewBlog() {
 
   return (
     <div className="container mx-auto p-4">
+      <Navbar />
       <h1>New Blog</h1>
 
       <input

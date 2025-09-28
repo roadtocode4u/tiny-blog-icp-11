@@ -3,14 +3,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router";
+import Navbar from "../components/Navbar";
 import { BLOG_CATEGORIES } from "./../constants";
-import { getCurrentUser } from "./../util";
 
 function EditBlog() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(BLOG_CATEGORIES[0]);
-  const [user, setUser] = useState(null);
   const { slug } = useParams();
 
   const loadBlog = async () => {
@@ -29,7 +28,6 @@ function EditBlog() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
-    setUser(getCurrentUser());
     loadBlog();
   }, []);
 
@@ -64,6 +62,7 @@ function EditBlog() {
     try {
       const response = await axios.patch(
         `${import.meta.env.VITE_API_URL}/blogs/${slug}/publish`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -84,6 +83,7 @@ function EditBlog() {
 
   return (
     <div className="container mx-auto p-4">
+      <Navbar />
       <h1>Edit Blog</h1>
 
       <input
