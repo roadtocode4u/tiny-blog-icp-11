@@ -27,7 +27,8 @@ function ReadBlog() {
 
       <p>
         Published On:{" "}
-        {new Date(blog.publishedAt || blog.updatedAt).toLocaleString()}
+        {new Date(blog.publishedAt || blog.updatedAt).toLocaleString()}, Read by{" "}
+        {blog.viewCount} people
       </p>
 
       <div className="flex items-center mb-4">

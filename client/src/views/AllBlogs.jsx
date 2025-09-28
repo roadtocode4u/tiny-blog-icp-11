@@ -37,6 +37,7 @@ function AllBlogs() {
             status,
             category,
             slug,
+            viewCount,
           } = blog;
 
           return (
@@ -49,6 +50,7 @@ function AllBlogs() {
               status={status}
               category={category}
               slug={slug}
+              viewCount={viewCount}
             />
           );
         })}

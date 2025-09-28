@@ -8,6 +8,7 @@ function BlogCard({
   status,
   category,
   slug,
+  viewCount,
 }) {
   return (
     <div className="border p-4 my-4 rounded-md relative">
@@ -31,7 +32,8 @@ function BlogCard({
         </div>
       </div>
       <p className="text-sm mt-2">
-        Published On: {new Date(publishedAt || updatedAt).toLocaleString()}
+        Published On: {new Date(publishedAt || updatedAt).toLocaleString()},
+        Read By {viewCount} people
       </p>
 
       <span className="absolute top-2 right-2 bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded-md">

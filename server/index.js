@@ -11,6 +11,7 @@ import {
   putBlogs,
 } from "./controllers/blog.js";
 import { postLogin, postSignup } from "./controllers/user.js";
+import Blog from "./models/Blog.js";
 dotenv.config();
 
 const app = express();
@@ -56,10 +57,26 @@ const jwtCheck = (req, res, next) => {
   }
 };
 
+const increaseViewCount = async (req, res, next) => {
+  const { slug } = req.params;
+
+  try {
+    const blog = await Blog.findOne({ slug });
+    if (blog) {
+      blog.viewCount += 1;
+      await blog.save();
+    }
+  } catch (error) {
+    console.error("Error increasing view count:", error);
+  }
+
+  next();
+};
+
 app.post("/signup", postSignup);
 app.post("/login", postLogin);
 app.get("/blogs", getBlogs);
-app.get("/blogs/:slug", getBlogForSlug);
+app.get("/blogs/:slug", increaseViewCount, getBlogForSlug);
 
 app.post("/blogs", jwtCheck, postBlogs);
 app.patch("/blogs/:slug/publish", jwtCheck, patchPublishBlog);
