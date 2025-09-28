@@ -34,30 +34,51 @@ function EditBlog() {
   }, []);
 
   const updateBlog = async () => {
-    const response = await axios.put(`${import.meta.env.VITE_API_URL}/blogs/${slug}`, {
-      title,
-      content,
-      category
-    });
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/blogs/${slug}`,
+        {
+          title,
+          content,
+          category,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-    if (response?.data?.success) {
-      toast.success("Blog saved successfully");
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
+      if (response?.data?.success) {
+        toast.success("Blog saved successfully");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Error updating blog");
     }
   };
 
   const publishBlog = async () => {
-    const response = await axios.patch(
-      `${import.meta.env.VITE_API_URL}/blogs/${slug}/publish`
-    );
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/blogs/${slug}/publish`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-    if (response?.data?.success) {
-      toast.success("Blog published successfully");
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
+      if (response?.data?.success) {
+        toast.success("Blog published successfully");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Error publishing blog");
     }
   };
 

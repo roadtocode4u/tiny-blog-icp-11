@@ -17,18 +17,30 @@ function NewBlog() {
   }, []);
 
   const saveBlog = async () => {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/blogs`, {
-      title,
-      content,
-      category,
-      author: user?._id,
-    });
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/blogs`,
+        {
+          title,
+          content,
+          category,
+          author: user?._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-    if (response?.data?.success) {
-      toast.success("Blog saved successfully");
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
+      if (response?.data?.success) {
+        toast.success("Blog saved successfully");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Error creating blog");
     }
   };
 

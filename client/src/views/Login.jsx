@@ -15,7 +15,7 @@ function Login() {
     );
     if (response?.data?.success) {
       localStorage.setItem("loggedInUser", JSON.stringify(response.data.user));
-
+      localStorage.setItem("token", response.data.token);
       window.location.href = "/";
     }
   };
